@@ -8,7 +8,8 @@ On Linux (tested on Fedora 22) prepare a Debian GNU/Linux Jessie base image.
 ```code
 sudo yum install debootstrap
 # 5g
-dd if=/dev/zero of=jessie.img bs=$[ 1024 * 1024 ] count=$[ 1024 * 5 ]
+dd if=/dev/zero of=jessie.img bs=$[ 1024 * 1024 ] \
+  count=$[ 1024 * 5 ]
 
 # Show used loop devices
 losetup -f
@@ -18,7 +19,9 @@ losetup /dev/loop0 jessie.img
 mkdir jessie
 sudo mkfs.ext4 /dev/loop0
 sudo mount /dev/loop0 jessie
-sudo debootstrap --foreign --variant=minibase --arch armel jessie jessie/ http://http.debian.net/debian
+sudo debootstrap --foreign --variant=minibase \
+  --arch armel jessie jessie/ \
+  http://http.debian.net/debian
 sudo umount jessie
 ```
 
@@ -44,8 +47,10 @@ busybox mount --bind /dev/pts $(pwd)/jessie/dev/pts
 busybox mount --bind /sys $(pwd)/jessie/sys
 # Bind-Mound the rest of Android
 mkdir -l $(pwd)/jessie/storage/sdcard{0,1}
-busybox mount --bind /mnt/shell/emulated $(pwd)/jessie/storage/sdcard0
-busybox mount --bind /storage/sdcard1 $(pwd)/jessie/storage/sdcard1
+busybox mount --bind /mnt/shell/emulated \
+  $(pwd)/jessie/storage/sdcard0
+busybox mount --bind /storage/sdcard1 \
+  $(pwd)/jessie/storage/sdcard1
 # Check mounts
 mount | grep jessie
 ```
@@ -80,7 +85,25 @@ END
 apt-get update
 ```
 
-Here we go!
+Bashrc
+
+```
+cat <<END >~/.bashrc
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
+export EDITOR=vim
+hostname $(cat /etc/hostname)
+# Example how to start single services
+# service uptimed status &>/dev/null || service uptimed start
+```
 
 
+Enter chroot script (as root):
+
+```
+cp jessie.sh /storage/sdcard1/Linux/jessie.sh
+cd /storage/sdcard1/Linux
+sh jessie.sh enter
+```
+
+Enjoy!
 
