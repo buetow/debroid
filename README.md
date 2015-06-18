@@ -25,7 +25,7 @@ sudo debootstrap --foreign --variant=minibase \
 sudo umount jessie
 ```
 
-Initial (manual) setup on external SD card on the Phone via Android Debugger
+Initial (manual) setup on external SD card on the Phone via Android Debugger:
 
 ```
 adb root
@@ -66,8 +66,12 @@ exit
 Last setup steps
 
 ```
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-  >> $(pwd)/jessie/root/.bashrc
+cat <<END >~/.bashrc
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
+export EDITOR=vim
+hostname $(cat /etc/hostname)
+# Example how to start single services
+# service uptimed status &>/dev/null || service uptimed start
 
 # Fixing an error messages while loading the profile
 sed -i s#id#/usr/bin/id# /etc/profile
@@ -84,18 +88,6 @@ deb-src http://ftp.uk.debian.org/debian/ jessie main contrib non-free
 END
 apt-get update
 ```
-
-Bashrc
-
-```
-cat <<END >~/.bashrc
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
-export EDITOR=vim
-hostname $(cat /etc/hostname)
-# Example how to start single services
-# service uptimed status &>/dev/null || service uptimed start
-```
-
 
 Enter chroot script (as root):
 
