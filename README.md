@@ -3,7 +3,7 @@ DEBRIOD
 
 Install a full blown Debian GNU/Linux Chroot on a LG G3 D855 CyanogenMod 12. Needs root and needs developer mode activated.
 
-[![Debroid Screenshot](Debroid.png)](Debroid.png)
+![](https://github.com/buetow/debroid/blob/master/Deboroid.png)
 
 On Linux (tested on Fedora 22) prepare a Debian GNU/Linux Jessie base image.
 
