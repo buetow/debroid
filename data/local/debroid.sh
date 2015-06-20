@@ -1,4 +1,3 @@
-#!/system/bin/sh
 
 log=/data/local/debroid.out
 err=/data/local/debroid.err
