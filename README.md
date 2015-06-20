@@ -112,18 +112,18 @@ cat /etc/debian_version
 exit
 ```
 
-Include to Android startup 
+Include to Android startup (userinit.sh seems not to work on CM12, so we use a different way here):
 
 ```
-# This script is called from /etc/init.d/*userinit, but
-# does not exist yet, so create it now
-cat <<END >/data/local/userinit.sh
-#!/system/bin/sh
-
-cd /storage/sdcard1/Linux
-sh jessie.sh start_services
-END
+adb push data/local/debroid.sh /data/local
 ```
+
+Afterwards install a program like ROM Toolbox and add the following bootup command:
+
+```
+/system/bin/sh /data/local/debroid.sh
+```
+
 
 Enjoy!
 
