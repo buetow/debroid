@@ -7,6 +7,10 @@ export ROOT=$(pwd)/jessie
 export LOOP_DEVICE=/dev/block/loop1
 export SHELL=/bin/bash
 
+function start_services {
+  HOME=/root LD_PRELOAD='' chroot $ROOT $SHELL /etc/rc.debroid
+}
+
 function enter_chroot {
   HOME=/root LD_PRELOAD='' chroot $ROOT $SHELL -l
 }
@@ -56,8 +60,12 @@ case $ARG in
     enter_chroot
     umount_chroot
     ;;
+  start_services)
+    mount_chroot
+    start_services
+    ;;
   *)
-    echo "Usage: $0 session|mount|umount|enter"
+    echo "Usage: $0 session|mount|umount|enter|start_services"
     exit 1
     ;;
 esac

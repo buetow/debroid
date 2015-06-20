@@ -1,4 +1,4 @@
-DEBRIOD
+Debroid
 =======
 
 Install a full blown Debian GNU/Linux Chroot on a LG G3 D855 CyanogenMod 12. Needs root and needs developer mode activated.
@@ -68,13 +68,11 @@ exit
 Last setup steps
 
 ```
+sh jessie.sh enter
 cat <<END >~/.bashrc
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
 export EDITOR=vim
 hostname $(cat /etc/hostname)
-# Example how to start single services
-# service uptimed status &>/dev/null || service uptimed start
-
 # Fixing an error messages while loading the profile
 sed -i s#id#/usr/bin/id# /etc/profile
 
@@ -89,14 +87,43 @@ deb http://ftp.uk.debian.org/debian/ jessie main contrib non-free
 deb-src http://ftp.uk.debian.org/debian/ jessie main contrib non-free
 END
 apt-get update
+exit
+```
+
+Debroid services startup
+```
+sh jessie.sh enter
+cat <<END > /etc/rc.debroid
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
+service uptimed status &>/dev/null || service uptimed start
+exit 0
+END
+chmod 0755 /etc/rc.debroid
+exit
 ```
 
 Enter chroot script (as root):
 
 ```
+sh jessie.sh enter
 cp jessie.sh /storage/sdcard1/Linux/jessie.sh
 cd /storage/sdcard1/Linux
+sh jessie.sh start_services
 sh jessie.sh enter
+exit
+```
+
+Include to Android startup 
+
+```
+# This script is called from /etc/init.d/*userinit, but
+# does not exist yet, so create it now
+cat <<END >/data/local/userinit.sh
+#!/system/bin/sh
+
+cd /storage/sdcard1/Linux
+sh jessie.sh start_services
+END
 ```
 
 Enjoy!
