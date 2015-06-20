@@ -61,7 +61,7 @@ busybox mount --bind /storage/sdcard1 \
 mount | grep jessie
 ```
 
-Second debootstrap stage, but inside the chroot on android!
+Second debootstrap stage, but inside the chroot on Android!
 ```
 LD_PRELOAD='' chroot $(pwd)/jessie /bin/bash -l
 export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin
@@ -85,7 +85,7 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
 export EDITOR=vim
 hostname $(cat /etc/hostname)
 
-# Fixing an error messages while loading the profile
+# Fixing an error message while loading the profile
 sed -i s#id#/usr/bin/id# /etc/profile
 
 # Setting the hostname
@@ -102,14 +102,18 @@ apt-get update
 exit # Exit chroot
 ```
 
-Debroid services startup (we don't use the Debian runlevels)
+Debroid services startup (we don't use the Debian runlevels yet)
 ```
 sh jessie.sh enter
+
+# Setup example serice uptimed
+apt-get install uptimed
 cat <<END > /etc/rc.debroid
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
 service uptimed status &>/dev/null || service uptimed start
 exit 0
 END
+
 chmod 0755 /etc/rc.debroid
 exit # Exit chroot
 exit # Exit adb shell
@@ -132,3 +136,4 @@ Reboot & test!
 
 
 Enjoy!
+
