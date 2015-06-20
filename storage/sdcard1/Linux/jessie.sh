@@ -3,7 +3,7 @@
 set -x
 
 export ARG=$1
-export ROOT=$(pwd)/jessie
+export ROOT=/storage/sdcard1/Linux/jessie
 export LOOP_DEVICE=/dev/block/loop1
 export SHELL=/bin/bash
 
