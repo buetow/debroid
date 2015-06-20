@@ -105,11 +105,10 @@ exit
 Enter chroot script (as root):
 
 ```
-sh jessie.sh enter
 cp jessie.sh /storage/sdcard1/Linux/jessie.sh
 cd /storage/sdcard1/Linux
-sh jessie.sh start_services
 sh jessie.sh enter
+cat /etc/debian_version
 exit
 ```
 
