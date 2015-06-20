@@ -69,4 +69,3 @@ case $ARG in
     exit 1
     ;;
 esac
-
