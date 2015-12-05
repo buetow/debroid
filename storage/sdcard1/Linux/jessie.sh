@@ -8,11 +8,11 @@ export LOOP_DEVICE=/dev/block/loop1
 export SHELL=/bin/bash
 
 function start_services {
-  HOME=/root LD_PRELOAD='' chroot $ROOT $SHELL /etc/rc.debroid
+  HOME=/root chroot $ROOT $SHELL /etc/rc.debroid
 }
 
 function enter_chroot {
-  HOME=/root LD_PRELOAD='' chroot $ROOT $SHELL -l
+  HOME=/root chroot $ROOT $SHELL -l
 }
 
 function mount_chroot {
